@@ -47,8 +47,8 @@ export default function Home() {
     <main className="min-h-screen bg-zinc-900 text-zinc-100 p-4 md:p-8">
       <Card className="max-w-4xl mx-auto bg-zinc-800 border-zinc-700">
         <CardHeader className="border-b border-zinc-700">
-          <CardTitle className="text-2xl text-blue-400">Game Stats Tracker</CardTitle>
-          <CardDescription className="text-zinc-400">Track and analyze your game performance</CardDescription>
+          <CardTitle className="text-2xl text-blue-400">KMC Stats Calculator</CardTitle>
+          <CardDescription className="text-zinc-400">Calculate all stats and averages across games</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
