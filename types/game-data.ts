@@ -10,7 +10,7 @@ export interface GameData {
 }
 
 export interface GameStats {
-  pointsPerElimination: number | null
+  scorePerElimination: number | null
   scorePerMinute: number | null
   eliminationsPerMinute: number | null
   killsPerMinute: number | null

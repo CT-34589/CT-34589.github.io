@@ -124,21 +124,21 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
     e.preventDefault()
 
     // Validate required fields
-    if (newGameData.eliminations <= 0) {
-      alert("Please enter a valid number of eliminations")
-      return
-    }
-
-    if (newGameData.score <= 0) {
-      alert("Please enter a valid score")
-      return
-    }
-
-    // Validate that duration is entered and valid
-    if (!newGameData.duration || newGameData.durationMinutes <= 0) {
-      alert("Please enter a valid game duration")
-      return
-    }
+    // if (newGameData.eliminations <= 0) {
+    //   alert("Please enter a valid number of eliminations")
+    //   return
+    // }
+    //
+    // if (newGameData.score <= 0) {
+    //   alert("Please enter a valid score")
+    //   return
+    // }
+    //
+    // // Validate that duration is entered and valid
+    // if (!newGameData.duration || newGameData.durationMinutes <= 0) {
+    //   alert("Please enter a valid game duration")
+    //   return
+    // }
 
     onAddGame({
       ...newGameData,
@@ -212,7 +212,8 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor={`edit-eliminations-${game.id}`} className="text-zinc-400 flex items-center">
-                        Eliminations <span className="text-red-400 ml-1">*</span>
+                        Eliminations
+                        {/*<span className="text-red-400 ml-1">*</span>*/}
                       </Label>
                       <Input
                         id={`edit-eliminations-${game.id}`}
@@ -220,16 +221,18 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]+"
+                        autoComplete={"off"}
                         defaultValue={game.eliminations}
                         onChange={(e) => handleGameChange(game.id, e)}
                         className="bg-zinc-700 border-zinc-600 text-white"
-                        required
+                        // required
                       />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor={`edit-score-${game.id}`} className="text-zinc-400 flex items-center">
-                        Score <span className="text-red-400 ml-1">*</span>
+                        Score
+                        {/*<span className="text-red-400 ml-1">*</span>*/}
                       </Label>
                       <Input
                         id={`edit-score-${game.id}`}
@@ -237,10 +240,11 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]+"
+                        autoComplete={"off"}
                         defaultValue={game.score}
                         onChange={(e) => handleGameChange(game.id, e)}
                         className="bg-zinc-700 border-zinc-600 text-white"
-                        required
+                        // required
                       />
                     </div>
 
@@ -254,6 +258,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]+"
+                        autoComplete={"off"}
                         defaultValue={game.kills ?? ""}
                         onChange={(e) => handleGameChange(game.id, e)}
                         className="bg-zinc-700 border-zinc-600 text-white"
@@ -269,6 +274,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         name="assists"
                         type="text"
                         inputMode="numeric"
+                        autoComplete={"off"}
                         pattern="[0-9]+"
                         defaultValue={game.assists ?? ""}
                         onChange={(e) => handleGameChange(game.id, e)}
@@ -285,6 +291,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         name="deaths"
                         type="text"
                         inputMode="numeric"
+                        autoComplete={"off"}
                         pattern="[0-9]+"
                         defaultValue={game.deaths ?? ""}
                         onChange={(e) => handleGameChange(game.id, e)}
@@ -295,7 +302,8 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                     <div className="space-y-2">
                       <Label htmlFor={`edit-duration-${game.id}`} className="text-zinc-400 flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
-                        Duration <span className="text-red-400 ml-1">*</span>
+                        Duration
+                        {/*<span className="text-red-400 ml-1">*</span>*/}
                       </Label>
                       <Input
                         id={`edit-duration-${game.id}`}
@@ -303,11 +311,12 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]+"
+                        autoComplete={"off"}
                         placeholder="mm:ss"
                         defaultValue={game.duration}
                         onChange={(e) => handleGameChange(game.id, e)}
                         className="bg-zinc-700 border-zinc-600 text-white"
-                        required
+                        // required
                       />
                     </div>
                   </div>
@@ -325,7 +334,8 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="eliminations" className="text-zinc-400 flex items-center">
-                  Eliminations <span className="text-red-400 ml-1">*</span>
+                  Eliminations
+                  {/*<span className="text-red-400 ml-1">*</span>*/}
                 </Label>
                 <Input
                   id="eliminations"
@@ -333,16 +343,18 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]+"
+                  autoComplete={"off"}
                   value={newGameData.eliminations || ""}
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
-                  required
+                  // required
                 />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="score" className="text-zinc-400 flex items-center">
-                  Score <span className="text-red-400 ml-1">*</span>
+                  Score
+                  {/*<span className="text-red-400 ml-1">*</span>*/}
                 </Label>
                 <Input
                   id="score"
@@ -350,10 +362,11 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]+"
+                  autoComplete={"off"}
                   value={newGameData.score || ""}
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
-                  required
+                  // required
                 />
               </div>
 
@@ -367,6 +380,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]+"
+                  autoComplete={"off"}
                   value={newGameData.kills ?? ""}
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
@@ -383,6 +397,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]+"
+                  autoComplete={"off"}
                   value={newGameData.assists ?? ""}
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
@@ -399,6 +414,7 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]+"
+                  autoComplete={"off"}
                   value={newGameData.deaths ?? ""}
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
@@ -408,7 +424,8 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
               <div className="space-y-2">
                 <Label htmlFor="duration" className="text-zinc-400 flex items-center">
                   <Clock className="h-4 w-4 mr-1" />
-                  Duration <span className="text-red-400 ml-1">*</span>
+                  Duration
+                  {/*<span className="text-red-400 ml-1">*</span>*/}
                 </Label>
                 <Input
                   id="duration"
@@ -416,11 +433,12 @@ export default function GameInputForm({ games, onAddGame, onUpdateGame, onResetG
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9:]+"
+                  autoComplete={"off"}
                   ref={durationInputRef}
                   placeholder="mm:ss"
                   onChange={handleNewGameChange}
                   className="bg-zinc-800 border-zinc-700 text-white"
-                  required
+                  // required
                 />
                 <p className="text-xs text-zinc-500 mt-1">
                   Format: minutes:seconds (e.g., 9:19) or hours:minutes:seconds (e.g., 1:17:23)

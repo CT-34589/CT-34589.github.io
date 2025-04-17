@@ -49,7 +49,7 @@ export default function StatsResults({ games }: StatsResultsProps) {
   const gameStats = useMemo(() => {
     return games.map((game) => {
       const stats: GameStats = {
-        pointsPerElimination: game.eliminations > 0 ? game.score / game.eliminations : null,
+        scorePerElimination: game.eliminations > 0 ? game.score / game.eliminations : null,
         scorePerMinute: game.durationMinutes > 0 ? game.score / game.durationMinutes : null,
         eliminationsPerMinute: game.durationMinutes > 0 ? game.eliminations / game.durationMinutes : null,
         killsPerMinute: game.durationMinutes > 0 && game.kills !== null ? game.kills / game.durationMinutes : null,
@@ -98,7 +98,7 @@ export default function StatsResults({ games }: StatsResultsProps) {
     )
 
     const avgStats: GameStats = {
-      pointsPerElimination:
+      scorePerElimination:
         totals.gamesWithEliminations > 0 && totals.eliminations > 0 ? totals.score / totals.eliminations : null,
       scorePerMinute:
         totals.gamesWithDuration > 0 && totals.durationMinutes > 0 ? totals.score / totals.durationMinutes : null,
@@ -135,8 +135,8 @@ export default function StatsResults({ games }: StatsResultsProps) {
   if (games.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <AlertCircle className="h-12 w-12 text-blue-400 mb-4" />
-        <h3 className="text-xl font-semibold mb-2">No Game Data</h3>
+        <AlertCircle className="h-12 w-12 text-red-600 mb-4" />
+        <h3 className="text-xl font-semibold mb-2 text-blue-400">No Game Data</h3>
         <p className="text-zinc-400 max-w-md">Add some games in the Game Input tab to see your statistics here.</p>
       </div>
     )
@@ -154,11 +154,11 @@ export default function StatsResults({ games }: StatsResultsProps) {
           <CardContent className="p-0">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
               <StatItem
-                label="Points Per Elimination"
-                value={averageStats.stats.pointsPerElimination}
-                colorClass={getSPEColor(averageStats.stats.pointsPerElimination)}
+                label="Score Per Elimination"
+                value={averageStats.stats.scorePerElimination}
+                colorClass={getSPEColor(averageStats.stats.scorePerElimination)}
                 isSPE={true}
-                speValue={averageStats.stats.pointsPerElimination}
+                speValue={averageStats.stats.scorePerElimination}
               />
               <StatItem label="Score Per Minute" value={averageStats.stats.scorePerMinute} />
               <StatItem label="Eliminations Per Minute" value={averageStats.stats.eliminationsPerMinute} />
@@ -190,11 +190,11 @@ export default function StatsResults({ games }: StatsResultsProps) {
                 <AccordionContent className="pt-4 px-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <StatItem
-                      label="Points Per Elimination"
-                      value={game.stats.pointsPerElimination}
-                      colorClass={getSPEColor(game.stats.pointsPerElimination)}
+                      label="Score Per Elimination"
+                      value={game.stats.scorePerElimination}
+                      colorClass={getSPEColor(game.stats.scorePerElimination)}
                       isSPE={true}
-                      speValue={game.stats.pointsPerElimination}
+                      speValue={game.stats.scorePerElimination}
                     />
                     <StatItem label="Score Per Minute" value={game.stats.scorePerMinute} />
                     <StatItem label="Eliminations Per Minute" value={game.stats.eliminationsPerMinute} />
