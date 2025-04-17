@@ -93,3 +93,50 @@ export function formatTimeString(input: string): string {
 
   return formatted.join(":")
 }
+
+/**
+ * Normalizes time input by converting excessive minutes/seconds to proper format
+ * For example: "80:00" becomes "01:20:00"
+ */
+export function normalizeTimeInput(timeInput: string): string {
+  if (!timeInput) return ""
+
+  // Remove any non-digit or non-colon characters
+  const cleaned = timeInput.replace(/[^\d:]/g, "")
+
+  // Split by colons
+  const parts = cleaned.split(":")
+
+  let hours = 0
+  let minutes = 0
+  let seconds = 0
+
+  // Parse based on number of parts
+  if (parts.length === 1) {
+    // Just seconds
+    seconds = Number.parseInt(parts[0], 10) || 0
+  } else if (parts.length === 2) {
+    // mm:ss format
+    minutes = Number.parseInt(parts[0], 10) || 0
+    seconds = Number.parseInt(parts[1], 10) || 0
+  } else {
+    // hh:mm:ss format
+    hours = Number.parseInt(parts[0], 10) || 0
+    minutes = Number.parseInt(parts[1], 10) || 0
+    seconds = Number.parseInt(parts[2], 10) || 0
+  }
+
+  // Normalize: convert excessive seconds to minutes, excessive minutes to hours
+  minutes += Math.floor(seconds / 60)
+  seconds %= 60
+
+  hours += Math.floor(minutes / 60)
+  minutes %= 60
+
+  // Format the result
+  if (hours > 0) {
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+  } else {
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+  }
+}
