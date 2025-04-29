@@ -1,77 +1,90 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import GameInputForm from "@/components/game-input-form"
-import StatsResults from "@/components/stats-results"
-import type { GameData } from "@/types/game-data"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Calculator, Trophy, Clock } from "lucide-react"
 
-export default function Home() {
-  const [games, setGames] = useState<GameData[]>([])
-  const [activeTab, setActiveTab] = useState("input")
 
-  // Load saved games from localStorage on component mount
+export default function HomePage() {
+  const router = useRouter()
+
+  // Redirect to /kmc-calc if coming from a direct link to the calculator
   useEffect(() => {
-    const savedGames = localStorage.getItem("gameStats")
-    if (savedGames) {
-      try {
-        setGames(JSON.parse(savedGames))
-      } catch (e) {
-        console.error("Error loading saved games:", e)
-        localStorage.removeItem("gameStats")
-      }
+    const params = new URLSearchParams(window.location.search)
+    if (params.has("redirect") && params.get("redirect") === "calc") {
+      router.push("/kmc-calc")
     }
-  }, [])
-
-  // Save games to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("gameStats", JSON.stringify(games))
-  }, [games])
-
-  const addGame = (game: GameData) => {
-    setGames([...games, game])
-  }
-
-  const updateGame = (gameId: number, updatedGame: GameData) => {
-    setGames(games.map((game) => (game.id === gameId ? updatedGame : game)))
-  }
-
-  const resetGames = () => {
-    if (confirm("Are you sure you want to reset all game data?")) {
-      setGames([])
-    }
-  }
+  }, [router])
 
   return (
     <main className="min-h-screen bg-zinc-900 text-zinc-100 p-4 md:p-8">
-      <Card className="max-w-4xl mx-auto bg-zinc-800 border-zinc-700">
-        <CardHeader className="border-b border-zinc-700">
-          <CardTitle className="text-2xl text-blue-400">KMC Stats Calculator</CardTitle>
-          <CardDescription className="text-zinc-400">Calculate all stats and averages across games</CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full grid grid-cols-2 bg-zinc-800 rounded-none border-b border-zinc-700">
-              <TabsTrigger value="input" className="data-[state=active]:bg-zinc-700 data-[state=active]:text-blue-400">
-                Game Input
-              </TabsTrigger>
-              <TabsTrigger
-                value="results"
-                className="data-[state=active]:bg-zinc-700 data-[state=active]:text-blue-400"
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12 mt-8">
+          <h1 className="text-4xl font-bold text-blue-400 mb-4">104th Online Tools</h1>
+          <p className="text-xl text-zinc-300 max-w-2xl mx-auto">
+            Hub of all the 104th Battalion MilSim online tools. Track your game stats, view leaderboards, and more.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <Card className="bg-zinc-800 border-zinc-700 hover:border-blue-600 transition-colors">
+            <CardHeader>
+              <CardTitle className="flex items-center text-blue-400">
+                <Calculator className="mr-2 h-5 w-5" />
+                KMC Calculator
+              </CardTitle>
+              <CardDescription className="text-zinc-400">
+                Track your eliminations, kills, assists, and more
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-zinc-300 mb-4">
+                Record your game stats and see detailed breakdowns of your performance metrics including K/D ratio,
+                eliminations per minute, and more.
+              </p>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => router.push("/kmc-calc")}>
+                Open Calculator <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-zinc-800 border-zinc-700 hover:border-blue-600 transition-colors relative overflow-hidden">
+            <div className="absolute top-0 right-0 m-4">
+              {/*<Badge variant="outline" className="bg-blue-900/30 text-blue-300 border-blue-700">*/}
+              {/*  <Clock className="h-3 w-3 mr-1" />*/}
+              {/*  Coming Soon*/}
+              {/*</Badge>*/}
+            </div>
+            <CardHeader>
+              <CardTitle className="flex items-center text-blue-400">
+                <Trophy className="mr-2 h-5 w-5" />
+                Operation Leaderboard
+              </CardTitle>
+              <CardDescription className="text-zinc-400">View platoon rankings and performance</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-zinc-300 mb-4">
+                Check the latest platoon rankings, scores, and performance metrics across all operations. This feature
+                is currently in development.
+              </p>
+              <Button
+                className="w-full bg-blue-600/50 hover:bg-blue-700/50 cursor-not-allowed"
+                // onClick={() => router.push("/operation-leaderboard")}
               >
-                Results
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="input" className="p-4">
-              <GameInputForm games={games} onAddGame={addGame} onUpdateGame={updateGame} onResetGames={resetGames} />
-            </TabsContent>
-            <TabsContent value="results" className="p-4">
-              <StatsResults games={games} />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+
+                  <Clock className="ml-2 h-4 w-4" /> Coming Soon
+
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="text-center text-zinc-500 text-sm mt-12">
+          <p>© {new Date().getFullYear()} 104th Battalion MilSim. All rights reserved.</p>
+        </div>
+      </div>
     </main>
   )
 }

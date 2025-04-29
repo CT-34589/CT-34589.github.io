@@ -12,7 +12,7 @@ interface StatsResultsProps {
   games: GameData[]
 }
 
-// Function to get color for Points Per Elimination
+// Function to get color for Score per Elimination
 function getSPEColor(spe: number | null): string {
   if (spe === null) return "text-zinc-400"
   if (spe >= 400) return "text-blue-400" // Optimal
@@ -22,7 +22,7 @@ function getSPEColor(spe: number | null): string {
   return "text-[#e06666]" // Fail
 }
 
-// Function to get rating label for Points Per Elimination
+// Function to get rating label for Score per Elimination
 function getSPERating(spe: number | null): {
   label: string
   variant: "default" | "outline" | "secondary" | "destructive"
@@ -135,7 +135,7 @@ export default function StatsResults({ games }: StatsResultsProps) {
   if (games.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <AlertCircle className="h-12 w-12 text-red-600 mb-4" />
+        <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
         <h3 className="text-xl font-semibold mb-2 text-blue-400">No Game Data</h3>
         <p className="text-zinc-400 max-w-md">Add some games in the Game Input tab to see your statistics here.</p>
       </div>
@@ -154,7 +154,7 @@ export default function StatsResults({ games }: StatsResultsProps) {
           <CardContent className="p-0">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
               <StatItem
-                label="Score Per Elimination"
+                label="Score per Elimination"
                 value={averageStats.stats.scorePerElimination}
                 colorClass={getSPEColor(averageStats.stats.scorePerElimination)}
                 isSPE={true}
@@ -173,8 +173,8 @@ export default function StatsResults({ games }: StatsResultsProps) {
       )}
 
       <Card className="bg-zinc-800 border-zinc-700">
-        <CardHeader className="px-4 py-3 border-b border-zinc-700">
-          <CardTitle className="text-lg text-zinc-300">Individual Game Stats</CardTitle>
+        <CardHeader className="px-4 py-3 border-b border-zinc-700 text-zinc-300">
+          <CardTitle className="text-lg">Individual Game Stats</CardTitle>
         </CardHeader>
         <CardContent className="p-4">
           <Accordion type="single" collapsible className="space-y-4">
@@ -182,15 +182,15 @@ export default function StatsResults({ games }: StatsResultsProps) {
               <AccordionItem
                 key={game.id}
                 value={`game-${game.id}`}
-                className="border border-zinc-700 rounded-md overflow-hidden"
+                className="border border-zinc-700 rounded-md overflow-hidden hover:no-underline"
               >
-                <AccordionTrigger className="px-4 py-3 bg-zinc-700/30 hover:bg-zinc-700/50 text-left hover:no-underline">
+                <AccordionTrigger className="px-4 py-3 bg-zinc-700/30 hover:bg-zinc-700/50 text-left [&>svg]:text-zinc-300 hover:no-underline">
                   <span className="font-medium text-zinc-300">Game {index + 1}</span>
                 </AccordionTrigger>
                 <AccordionContent className="pt-4 px-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <StatItem
-                      label="Score Per Elimination"
+                      label="Score per Elimination"
                       value={game.stats.scorePerElimination}
                       colorClass={getSPEColor(game.stats.scorePerElimination)}
                       isSPE={true}
@@ -217,15 +217,21 @@ export default function StatsResults({ games }: StatsResultsProps) {
                       </div>
                       <div>
                         <span className="text-zinc-500">Kills:</span>{" "}
-                        <span className="text-white">{game.kills !== null ? game.kills : "No data"}</span>
+                        <span className={game.kills !== null ? "text-white" : "text-zinc-500"}>
+                          {game.kills !== null ? game.kills : "No data"}
+                        </span>
                       </div>
                       <div>
                         <span className="text-zinc-500">Assists:</span>{" "}
-                        <span className="text-white">{game.assists !== null ? game.assists : "No data"}</span>
+                        <span className={game.assists !== null ? "text-white" : "text-zinc-500"}>
+                          {game.assists !== null ? game.assists : "No data"}
+                        </span>
                       </div>
                       <div>
                         <span className="text-zinc-500">Deaths:</span>{" "}
-                        <span className="text-white">{game.deaths !== null ? game.deaths : "No data"}</span>
+                        <span className={game.deaths !== null ? "text-white" : "text-zinc-500"}>
+                          {game.deaths !== null ? game.deaths : "No data"}
+                        </span>
                       </div>
                       <div>
                         <span className="text-zinc-500">Duration:</span>{" "}
@@ -259,7 +265,9 @@ function StatItem({
   return (
     <div className="bg-zinc-900 p-3 rounded-md">
       <div className="text-zinc-400 text-xs mb-1">{label}</div>
-      <div className={`text-lg font-semibold ${colorClass}`}>{value !== null ? value.toFixed(2) : "No data"}</div>
+      <div className={`text-lg font-semibold ${value !== null ? colorClass : "text-zinc-500"}`}>
+        {value !== null ? value.toFixed(2) : "No data"}
+      </div>
       {isSPE && speValue !== null && (
         <div className="mt-1">
           <div
